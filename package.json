@@ -1,0 +1,33 @@
+{
+  "name": "globalpay",
+  "version": "0.1.0",
+  "private": true,
+  "description": "GlobalPay payment orchestration platform monorepo.",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "predev": "npm run build -w @globalpay/shared",
+    "dev": "concurrently -n web,api -c cyan,green \"npm run dev -w @globalpay/web\" \"npm run start:dev -w @globalpay/api\"",
+    "build": "npm run build -w @globalpay/shared && npm run build -w @globalpay/api && npm run build -w @globalpay/web",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "prisma:generate": "npm run prisma:generate -w @globalpay/api",
+    "prisma:migrate:dev": "npm run prisma:migrate:dev -w @globalpay/api"
+  },
+  "devDependencies": {
+    "@eslint/js": "latest",
+    "concurrently": "latest",
+    "eslint": "latest",
+    "prettier": "latest",
+    "typescript": "latest",
+    "typescript-eslint": "latest"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "npm": ">=10.0.0"
+  }
+}

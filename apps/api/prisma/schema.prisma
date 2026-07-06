@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  MERCHANT
+  OPERATOR
+}
+
+enum CheckoutSessionStatus {
+  CREATED
+  PENDING
+  COMPLETED
+  EXPIRED
+  CANCELLED
+}
+
+enum TransactionStatus {
+  CREATED
+  AUTHORIZED
+  CAPTURED
+  FAILED
+  REFUNDED
+  VOIDED
+}
+
+enum LedgerEntryType {
+  DEBIT
+  CREDIT
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String?
+  passwordHash String?
+  role         UserRole   @default(MERCHANT)
+  merchants    Merchant[] @relation("MerchantOwner")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([role])
+}
+
+model Merchant {
+  id               String            @id @default(cuid())
+  publicId         String            @unique @default(cuid())
+  ownerId          String
+  owner            User              @relation("MerchantOwner", fields: [ownerId], references: [id])
+  name             String
+  websiteUrl       String?
+  customers        Customer[]
+  checkoutSessions CheckoutSession[]
+  transactions     Transaction[]
+  ledgerEntries    LedgerEntry[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@index([ownerId])
+}
+
+model Customer {
+  id               String            @id @default(cuid())
+  merchantId       String
+  merchant         Merchant          @relation(fields: [merchantId], references: [id])
+  email            String?
+  name             String?
+  externalId       String?
+  checkoutSessions CheckoutSession[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@unique([merchantId, externalId])
+  @@index([merchantId])
+}
+
+model CheckoutSession {
+  id           String                @id @default(cuid())
+  merchantId   String
+  merchant     Merchant              @relation(fields: [merchantId], references: [id])
+  customerId   String?
+  customer     Customer?             @relation(fields: [customerId], references: [id])
+  amount       Decimal               @db.Decimal(19, 4)
+  currency     String
+  status       CheckoutSessionStatus @default(CREATED)
+  successUrl   String?
+  cancelUrl    String?
+  expiresAt    DateTime?
+  transactions Transaction[]
+  metadata     Json?
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+
+  @@index([merchantId, status])
+  @@index([customerId])
+}
+
+model Transaction {
+  id                String           @id @default(cuid())
+  merchantId        String
+  merchant          Merchant         @relation(fields: [merchantId], references: [id])
+  checkoutSessionId String?
+  checkoutSession   CheckoutSession? @relation(fields: [checkoutSessionId], references: [id])
+  amount            Decimal          @db.Decimal(19, 4)
+  currency          String
+  status            TransactionStatus @default(CREATED)
+  providerReference String?
+  ledgerEntries     LedgerEntry[]
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  @@index([merchantId, status])
+  @@index([checkoutSessionId])
+}
+
+model LedgerEntry {
+  id            String          @id @default(cuid())
+  merchantId    String
+  merchant      Merchant        @relation(fields: [merchantId], references: [id])
+  transactionId String?
+  transaction   Transaction?    @relation(fields: [transactionId], references: [id])
+  type          LedgerEntryType
+  amount        Decimal         @db.Decimal(19, 4)
+  currency      String
+  description   String?
+  metadata      Json?
+  createdAt     DateTime        @default(now())
+
+  @@index([merchantId, createdAt])
+  @@index([transactionId])
+}
