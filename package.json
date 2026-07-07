@@ -10,10 +10,14 @@
   "scripts": {
     "predev": "npm run build -w @globalpay/shared",
     "dev": "concurrently -n web,api -c cyan,green \"npm run dev -w @globalpay/web\" \"npm run start:dev -w @globalpay/api\"",
+    "prebuild": "npm run prisma:generate",
     "build": "npm run build -w @globalpay/shared && npm run build -w @globalpay/api && npm run build -w @globalpay/web",
+    "build:web": "npm run build -w @globalpay/shared && npm run build -w @globalpay/web",
+    "prelint": "npm run prisma:generate",
     "lint": "npm run lint --workspaces --if-present",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "pretypecheck": "npm run prisma:generate",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "prisma:generate": "npm run prisma:generate -w @globalpay/api",
     "prisma:migrate:dev": "npm run prisma:migrate:dev -w @globalpay/api"

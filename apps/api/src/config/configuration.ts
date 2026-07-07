@@ -8,6 +8,10 @@ export type AppConfig = {
   database: {
     url?: string;
   };
+  jwt: {
+    secret?: string;
+    accessTokenTtl: string;
+  };
 };
 
 const parseCorsOrigin = (origin?: string): string | string[] => {
@@ -30,5 +34,9 @@ export default (): AppConfig => ({
   },
   database: {
     url: process.env.DATABASE_URL
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    accessTokenTtl: process.env.JWT_ACCESS_TOKEN_TTL ?? '15m'
   }
 });

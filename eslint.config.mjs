@@ -18,7 +18,7 @@ export default [
     languageOptions: {
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['*.config.ts']
+          allowDefaultProject: ['*.config.ts', 'apps/api/prisma.config.ts']
         },
         tsconfigRootDir: import.meta.dirname
       }
@@ -32,6 +32,13 @@ export default [
         }
       ],
       '@typescript-eslint/no-floating-promises': 'error'
+    }
+  },
+  {
+    files: ['apps/api/prisma.config.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off'
     }
   },
   {

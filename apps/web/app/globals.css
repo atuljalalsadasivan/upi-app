@@ -126,7 +126,8 @@ h1 {
 .button,
 .pay-button,
 .form-preview button,
-.method-list button {
+.method-list button,
+.logout-button {
   border: 1px solid transparent;
   border-radius: 8px;
   min-height: 44px;
@@ -138,7 +139,8 @@ h1 {
 }
 
 .primary,
-.pay-button {
+.pay-button,
+.form-preview button {
   background: var(--primary);
   color: #ffffff;
 }
@@ -154,7 +156,9 @@ h1 {
 .placeholder-panel,
 .checkout-card,
 .metric-grid article,
-.capability-grid article {
+.capability-grid article,
+.auth-card,
+.profile-grid article {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -200,7 +204,9 @@ h1 {
 .capability-grid article,
 .metric-grid article,
 .placeholder-panel,
-.checkout-card {
+.checkout-card,
+.auth-card,
+.profile-grid article {
   padding: 22px;
 }
 
@@ -230,6 +236,19 @@ h1 {
   max-width: 680px;
 }
 
+.auth-layout {
+  display: grid;
+  justify-items: center;
+}
+
+.auth-card {
+  width: min(100%, 520px);
+}
+
+.auth-card.wide {
+  width: min(100%, 760px);
+}
+
 .form-preview {
   display: grid;
   gap: 16px;
@@ -251,6 +270,31 @@ h1 {
   background: #f9fafc;
 }
 
+.form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.full-span {
+  grid-column: 1 / -1;
+}
+
+.error-message {
+  color: #b42318;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.auth-switch {
+  color: var(--muted);
+  margin: 18px 0 0;
+}
+
+.auth-switch a {
+  color: var(--primary-dark);
+  font-weight: 800;
+}
+
 .form-preview button:disabled,
 .method-list button:disabled,
 .pay-button:disabled {
@@ -267,6 +311,41 @@ h1 {
   display: block;
   font-size: 2rem;
   margin-top: 10px;
+}
+
+.dashboard-top {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logout-button {
+  background: #ffffff;
+  border-color: var(--border);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.profile-grid span {
+  color: var(--muted);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.profile-grid strong {
+  font-size: 1.2rem;
+}
+
+.status-pill {
+  color: var(--accent);
 }
 
 .checkout-layout {
@@ -308,7 +387,17 @@ h1 {
   }
 
   .capability-grid,
-  .metric-grid {
+  .metric-grid,
+  .profile-grid,
+  .form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .dashboard-top {
+    flex-direction: column;
+  }
+
+  .full-span {
+    grid-column: auto;
   }
 }

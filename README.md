@@ -39,19 +39,26 @@ cp apps/web/.env.example apps/web/.env.local
 
 3. Start PostgreSQL locally and update `apps/api/.env` with your `DATABASE_URL`.
 
-4. Generate the Prisma client:
+4. Set a local JWT secret in `apps/api/.env`:
+
+```bash
+JWT_SECRET=replace-with-a-long-random-local-secret
+JWT_ACCESS_TOKEN_TTL=15m
+```
+
+5. Generate the Prisma client:
 
 ```bash
 npm run prisma:generate
 ```
 
-5. Create the first local migration:
+6. Create or update the local migration:
 
 ```bash
-npm run prisma:migrate:dev -- --name init
+npm run prisma:migrate:dev -- --name auth_merchant_signup
 ```
 
-6. Run the full development stack:
+7. Run the full development stack:
 
 ```bash
 npm run dev
@@ -73,7 +80,50 @@ Default local URLs:
 - `npm run prisma:migrate:dev` - run a local Prisma migration
 - `npm run format` - format the repository with Prettier
 
+## Auth API Examples
+
+Register a merchant admin:
+
+```bash
+curl -X POST http://localhost:3001/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fullName": "Ada Merchant",
+    "email": "ada@example.com",
+    "password": "password123",
+    "businessName": "Ada Commerce",
+    "businessType": "SaaS",
+    "country": "US",
+    "currency": "USD"
+  }'
+```
+
+Login:
+
+```bash
+curl -X POST http://localhost:3001/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "ada@example.com",
+    "password": "password123"
+  }'
+```
+
+Fetch the current merchant profile:
+
+```bash
+curl http://localhost:3001/auth/me \
+  -H "Authorization: Bearer <access-token>"
+```
+
+Frontend auth routes:
+
+- Register: http://localhost:3000/register
+- Login: http://localhost:3000/login
+- Dashboard: http://localhost:3000/dashboard
+
 ## Notes
 
 - Secrets must stay out of source control. Use `.env` files locally and a secret manager in deployed environments.
 - The Prisma schema includes placeholder financial domain models only. Payment capture, settlement, provider routing, reconciliation, risk, and ledger posting workflows are intentionally left for future modules.
+- Auth uses bcrypt password hashing and JWT access tokens for the local MVP. Browser token storage uses `sessionStorage`; move to secure HTTP-only cookie handling before production payment workflows.
