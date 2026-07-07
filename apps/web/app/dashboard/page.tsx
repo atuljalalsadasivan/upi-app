@@ -90,7 +90,7 @@ export default function DashboardPage() {
       </div>
       <div className="metric-grid">
         {metrics.map((metric) => (
-          <article key={metric.label}>
+          <article className="metric-card" key={metric.label}>
             <span>{metric.label}</span>
             <strong>{metric.value}</strong>
           </article>
