@@ -3,82 +3,102 @@ import Link from 'next/link';
 
 const capabilities = [
   {
+    eyebrow: '01',
     title: 'Merchant onboarding',
-    body: 'Register a merchant admin, create a merchant profile, and start from a pending business state.'
+    body: 'Create a merchant admin and business profile with a review-ready PENDING status.'
   },
   {
+    eyebrow: '02',
     title: 'Checkout orchestration',
-    body: 'Prepared hosted checkout surfaces and session states for future payment-method modules.'
+    body: 'Prepare hosted checkout sessions before adding real payment providers.'
   },
   {
+    eyebrow: '03',
     title: 'Transaction records',
-    body: 'A PostgreSQL-backed transaction model ready for authorization, capture, refunds, and reporting.'
+    body: 'Keep provider-neutral transaction records for auth, capture, refund, and reporting flows.'
   },
   {
+    eyebrow: '04',
     title: 'Ledger foundation',
-    body: 'Debit and credit entries are modeled early so money movement can be auditable from day one.'
+    body: 'Model debit and credit entries early so future money movement is auditable.'
   }
 ];
 
 export default function HomePage() {
   return (
     <>
-      <section className="landing">
+      <section className="hero-section">
         <div className="hero">
-          <div className="hero-copy">
-            <p className="eyebrow">API {DEFAULT_API_VERSION} foundation</p>
+          <div className="hero-copy reveal-panel">
+            <p className="eyebrow">GlobalPay API {DEFAULT_API_VERSION}</p>
             <h1>{GLOBALPAY_PLATFORM_NAME}</h1>
             <p className="hero-text">
-              A merchant payment operating system for onboarding, checkout sessions, transaction
-              records, and ledger-ready money movement.
+              A PayPal-style payment orchestration console for merchant onboarding, hosted checkout,
+              transaction records, and ledger-ready operations.
             </p>
             <div className="actions">
               <Link className="button primary" href="/register">
-                Create merchant
+                Open merchant account
               </Link>
               <Link className="button secondary" href="/checkout">
-                View checkout
+                Preview checkout
               </Link>
+            </div>
+            <div className="trust-row" aria-label="Platform foundations">
+              <span>JWT auth</span>
+              <span>Prisma + PostgreSQL</span>
+              <span>Provider-neutral</span>
             </div>
           </div>
 
-          <div className="ops-preview" aria-label="GlobalPay operations preview">
-            <div className="ops-toolbar">
+          <div className="product-frame" aria-label="GlobalPay operations preview">
+            <div className="window-bar">
+              <span />
+              <span />
+              <span />
+              <strong>Merchant console</strong>
+            </div>
+            <div className="console-header">
               <div>
-                <span>Today</span>
+                <span>Gross volume</span>
                 <strong>$42,860.00</strong>
               </div>
-              <span className="status-chip">Ready</span>
+              <span className="status-chip">Sandbox ready</span>
             </div>
-            <div className="ops-metrics">
-              <article>
-                <span>Auth rate</span>
-                <strong>98.4%</strong>
-              </article>
-              <article>
-                <span>Sessions</span>
+            <div className="console-body">
+              <article className="balance-card">
+                <span>Checkout sessions</span>
                 <strong>1,248</strong>
+                <div className="mini-bars" aria-hidden="true">
+                  <span style={{ height: '42%' }} />
+                  <span style={{ height: '68%' }} />
+                  <span style={{ height: '52%' }} />
+                  <span style={{ height: '84%' }} />
+                  <span style={{ height: '61%' }} />
+                  <span style={{ height: '92%' }} />
+                </div>
               </article>
-              <article>
-                <span>Pending</span>
-                <strong>12</strong>
+              <article className="approval-card">
+                <span>Auth readiness</span>
+                <strong>98.4%</strong>
+                <p>Checkout and ledger boundaries prepared for provider modules.</p>
               </article>
             </div>
-            <div className="rail-list">
+            <div className="payment-timeline">
               <div>
                 <span className="rail-dot settled" />
-                <span>Checkout session</span>
-                <strong>Created</strong>
+                <p>Merchant created</p>
+                <strong>PENDING</strong>
               </div>
               <div>
                 <span className="rail-dot processing" />
-                <span>Transaction</span>
-                <strong>Authorized</strong>
+                <p>Session opened</p>
+                <strong>READY</strong>
               </div>
               <div>
                 <span className="rail-dot posted" />
-                <span>Ledger entry</span>
-                <strong>Prepared</strong>
+                <p>Ledger entry</p>
+                <strong>DRAFT</strong>
               </div>
             </div>
           </div>
@@ -86,43 +106,36 @@ export default function HomePage() {
       </section>
 
       <section className="section-band">
-        <div className="section-inner dashboard-preview">
+        <div className="section-inner">
           <div className="section-heading">
-            <p className="eyebrow">Merchant console</p>
-            <h2>Built for operators, not a brochure.</h2>
+            <p className="eyebrow">Operating model</p>
+            <h2>One foundation for merchants, checkout, transactions, and ledgers.</h2>
           </div>
-          <div className="console-grid">
-            <article className="console-panel span-two">
-              <div className="panel-row">
-                <span>Gross volume</span>
-                <strong>$0.00</strong>
-              </div>
-              <div className="bar-stack" aria-hidden="true">
-                <span style={{ height: '42%' }} />
-                <span style={{ height: '58%' }} />
-                <span style={{ height: '35%' }} />
-                <span style={{ height: '70%' }} />
-                <span style={{ height: '64%' }} />
-                <span style={{ height: '86%' }} />
-                <span style={{ height: '52%' }} />
-              </div>
+          <div className="orchestration-map">
+            <article>
+              <span>Collect</span>
+              <strong>Hosted checkout</strong>
+              <p>Buyer-facing checkout pages stay isolated from provider integrations.</p>
             </article>
-            <article className="console-panel">
-              <span>Business status</span>
-              <strong className="status-pill">PENDING</strong>
+            <article>
+              <span>Authorize</span>
+              <strong>Transaction core</strong>
+              <p>Transaction records are ready for payment state transitions later.</p>
             </article>
-            <article className="console-panel">
-              <span>Settlement currency</span>
-              <strong>USD</strong>
+            <article>
+              <span>Settle</span>
+              <strong>Ledger entries</strong>
+              <p>Ledger placeholders give every future money movement a clear audit path.</p>
             </article>
           </div>
         </div>
       </section>
 
-      <section className="landing compact-section">
+      <section className="section-inner compact-section">
         <div className="capability-grid">
           {capabilities.map((item) => (
             <article key={item.title}>
+              <span>{item.eyebrow}</span>
               <h2>{item.title}</h2>
               <p>{item.body}</p>
             </article>
@@ -134,7 +147,7 @@ export default function HomePage() {
         <div className="section-inner split-section">
           <div>
             <p className="eyebrow">Current scope</p>
-            <h2>Auth and merchant setup are ready. Payments stay deliberately out.</h2>
+            <h2>Ready for Module 3 without pretending payments exist today.</h2>
             <p>
               The platform now has merchant signup, login, protected profile access, and the schema
               boundaries needed before real payment flows are introduced.

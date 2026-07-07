@@ -50,6 +50,18 @@ export default function RegisterPage() {
 
   return (
     <section className="page-shell auth-layout">
+      <aside className="auth-aside">
+        <p className="eyebrow">Onboarding</p>
+        <h2>Set up the merchant profile before payments are enabled.</h2>
+        <div className="auth-proof">
+          <span>Default role</span>
+          <strong>MERCHANT_ADMIN</strong>
+        </div>
+        <div className="auth-proof">
+          <span>Business status</span>
+          <strong>PENDING</strong>
+        </div>
+      </aside>
       <div className="auth-card wide">
         <p className="eyebrow">Merchant onboarding</p>
         <h1>Register</h1>

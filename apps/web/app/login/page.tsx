@@ -32,6 +32,18 @@ export default function LoginPage() {
 
   return (
     <section className="page-shell auth-layout">
+      <aside className="auth-aside">
+        <p className="eyebrow">Merchant console</p>
+        <h2>Control access before moving money.</h2>
+        <div className="auth-proof">
+          <span>Access token</span>
+          <strong>JWT</strong>
+        </div>
+        <div className="auth-proof">
+          <span>Password storage</span>
+          <strong>bcrypt</strong>
+        </div>
+      </aside>
       <div className="auth-card">
         <p className="eyebrow">Merchant access</p>
         <h1>Login</h1>

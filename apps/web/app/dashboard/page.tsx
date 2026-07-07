@@ -46,7 +46,7 @@ export default function DashboardPage() {
   if (isLoading) {
     return (
       <section className="page-shell">
-        <div className="placeholder-panel">
+        <div className="placeholder-panel loading-panel">
           <p className="eyebrow">Merchant operations</p>
           <h1>Dashboard</h1>
           <p>Loading merchant profile.</p>
@@ -61,11 +61,14 @@ export default function DashboardPage() {
 
   return (
     <section className="page-shell">
-      <div className="dashboard-top">
+      <div className="dashboard-top dashboard-hero">
         <div className="page-heading">
           <p className="eyebrow">Merchant operations</p>
           <h1>{profile.merchant.businessName}</h1>
-          <p>{profile.user.email}</p>
+          <p>
+            Signed in as {profile.user.email}. Payments are not live yet; this dashboard is the
+            merchant operating shell.
+          </p>
         </div>
         <button className="logout-button" type="button" onClick={handleLogout}>
           Logout
