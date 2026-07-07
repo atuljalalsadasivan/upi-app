@@ -8,6 +8,7 @@ coverage
 .env.*.local
 *.log
 .codex-logs
+.codex-temp
 *.tsbuildinfo
 **/generated
 apps/api/prisma/migrations
