@@ -49,6 +49,7 @@ export default function DashboardPage() {
         <div className="placeholder-panel">
           <p className="eyebrow">Merchant operations</p>
           <h1>Dashboard</h1>
+          <p>Loading merchant profile.</p>
         </div>
       </section>
     );
@@ -94,7 +95,20 @@ export default function DashboardPage() {
       </div>
       <div className="placeholder-panel">
         <h2>Recent activity</h2>
-        <p>No transactions yet. Payment workflows are intentionally not implemented.</p>
+        <div className="activity-table">
+          <div>
+            <span>Checkout sessions</span>
+            <strong>Ready for implementation</strong>
+          </div>
+          <div>
+            <span>Transactions</span>
+            <strong>No live payment flow yet</strong>
+          </div>
+          <div>
+            <span>Ledger entries</span>
+            <strong>Schema prepared</strong>
+          </div>
+        </div>
       </div>
     </section>
   );

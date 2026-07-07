@@ -35,6 +35,9 @@ export default function LoginPage() {
       <div className="auth-card">
         <p className="eyebrow">Merchant access</p>
         <h1>Login</h1>
+        <p className="auth-copy">
+          Access the merchant console for profile, checkout, and transaction operations.
+        </p>
         <form
           className="form-preview"
           onSubmit={(event) => {

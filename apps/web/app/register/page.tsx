@@ -53,6 +53,9 @@ export default function RegisterPage() {
       <div className="auth-card wide">
         <p className="eyebrow">Merchant onboarding</p>
         <h1>Register</h1>
+        <p className="auth-copy">
+          Create the merchant admin account and business profile used by the API.
+        </p>
         <form
           className="form-preview form-grid"
           onSubmit={(event) => {

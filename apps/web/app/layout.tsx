@@ -13,6 +13,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <header className="site-header">
           <Link className="brand" href="/">
+            <span className="brand-mark">G</span>
             GlobalPay
           </Link>
           <nav aria-label="Primary navigation">
