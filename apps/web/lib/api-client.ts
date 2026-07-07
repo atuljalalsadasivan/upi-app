@@ -1,4 +1,13 @@
-import type { AuthResponse, LoginRequest, MeResponse, RegisterRequest } from '@globalpay/shared';
+import type {
+  AuthResponse,
+  CheckoutSessionResponse,
+  CheckoutSessionsResponse,
+  CreateCheckoutSessionRequest,
+  LoginRequest,
+  MeResponse,
+  PublicCheckoutSessionResponse,
+  RegisterRequest
+} from '@globalpay/shared';
 import { authStorage } from './auth-storage';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:3001';
@@ -75,5 +84,38 @@ export const authApi = {
 
   me(): Promise<MeResponse> {
     return request<MeResponse>('/auth/me', {}, { token: authStorage.getToken() });
+  }
+};
+
+export const checkoutApi = {
+  createSession(payload: CreateCheckoutSessionRequest): Promise<CheckoutSessionResponse> {
+    return request<CheckoutSessionResponse>(
+      '/checkout/sessions',
+      {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      },
+      { token: authStorage.getToken() }
+    );
+  },
+
+  listSessions(): Promise<CheckoutSessionsResponse> {
+    return request<CheckoutSessionsResponse>(
+      '/checkout/sessions',
+      {},
+      { token: authStorage.getToken() }
+    );
+  },
+
+  cancelSession(sessionId: string): Promise<CheckoutSessionResponse> {
+    return request<CheckoutSessionResponse>(
+      `/checkout/sessions/${sessionId}/cancel`,
+      { method: 'PATCH' },
+      { token: authStorage.getToken() }
+    );
+  },
+
+  getPublicSession(sessionId: string): Promise<PublicCheckoutSessionResponse> {
+    return request<PublicCheckoutSessionResponse>(`/public/checkout/sessions/${sessionId}`);
   }
 };

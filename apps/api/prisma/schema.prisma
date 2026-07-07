@@ -18,11 +18,10 @@ enum MerchantStatus {
 }
 
 enum CheckoutSessionStatus {
-  CREATED
   PENDING
   COMPLETED
-  EXPIRED
   CANCELLED
+  EXPIRED
 }
 
 enum TransactionStatus {
@@ -72,55 +71,55 @@ model Merchant {
 }
 
 model Customer {
-  id               String            @id @default(cuid())
-  merchantId       String
-  merchant         Merchant          @relation(fields: [merchantId], references: [id])
-  email            String?
-  name             String?
-  externalId       String?
-  checkoutSessions CheckoutSession[]
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+  id         String   @id @default(cuid())
+  merchantId String
+  merchant   Merchant @relation(fields: [merchantId], references: [id])
+  email      String?
+  name       String?
+  externalId String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@unique([merchantId, externalId])
   @@index([merchantId])
 }
 
 model CheckoutSession {
-  id           String                @id @default(cuid())
-  merchantId   String
-  merchant     Merchant              @relation(fields: [merchantId], references: [id])
-  customerId   String?
-  customer     Customer?             @relation(fields: [customerId], references: [id])
-  amount       Decimal               @db.Decimal(19, 4)
-  currency     String
-  status       CheckoutSessionStatus @default(CREATED)
-  successUrl   String?
-  cancelUrl    String?
-  expiresAt    DateTime?
-  transactions Transaction[]
-  metadata     Json?
-  createdAt    DateTime              @default(now())
-  updatedAt    DateTime              @updatedAt
+  id            String                @id @default(cuid())
+  merchantId    String
+  merchant      Merchant              @relation(fields: [merchantId], references: [id])
+  amount        Decimal               @db.Decimal(19, 4)
+  currency      String
+  customerEmail String
+  customerName  String
+  description   String?
+  successUrl    String
+  cancelUrl     String
+  status        CheckoutSessionStatus @default(PENDING)
+  expiresAt     DateTime
+  transactions  Transaction[]
+  metadata      Json?
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
 
   @@index([merchantId, status])
-  @@index([customerId])
+  @@index([expiresAt])
 }
 
 model Transaction {
-  id                String           @id @default(cuid())
+  id                String            @id @default(cuid())
   merchantId        String
-  merchant          Merchant         @relation(fields: [merchantId], references: [id])
+  merchant          Merchant          @relation(fields: [merchantId], references: [id])
   checkoutSessionId String?
-  checkoutSession   CheckoutSession? @relation(fields: [checkoutSessionId], references: [id])
-  amount            Decimal          @db.Decimal(19, 4)
+  checkoutSession   CheckoutSession?  @relation(fields: [checkoutSessionId], references: [id])
+  amount            Decimal           @db.Decimal(19, 4)
   currency          String
   status            TransactionStatus @default(CREATED)
   providerReference String?
   ledgerEntries     LedgerEntry[]
   metadata          Json?
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
 
   @@index([merchantId, status])
   @@index([checkoutSessionId])

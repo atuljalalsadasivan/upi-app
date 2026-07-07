@@ -623,6 +623,22 @@ td strong {
   color: var(--danger);
 }
 
+.badge.pending {
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+}
+
+.badge.completed {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.badge.cancelled,
+.badge.expired {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
 .status-list {
   display: grid;
   gap: 13px;
@@ -762,6 +778,28 @@ td strong {
   grid-column: 1 / -1;
 }
 
+.success-message {
+  margin: 0;
+  color: var(--success);
+  font-weight: 750;
+}
+
+.table-subtext {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.table-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.merchant-dashboard-grid .placeholder-panel {
+  grid-column: span 4;
+}
+
 .compliance-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -893,6 +931,16 @@ td strong {
   font-size: 0.86rem;
 }
 
+.checkout-status-message {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-muted);
+  color: var(--muted-strong);
+  padding: 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 .auth-layout {
   display: grid;
   grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1fr);
@@ -981,7 +1029,8 @@ td strong {
   .activity-card,
   .admin-card,
   .form-card,
-  .compliance-card {
+  .compliance-card,
+  .merchant-dashboard-grid .placeholder-panel {
     grid-column: span 12;
   }
 }

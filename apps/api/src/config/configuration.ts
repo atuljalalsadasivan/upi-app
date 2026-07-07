@@ -2,6 +2,9 @@ export type AppConfig = {
   api: {
     port: number;
   };
+  web: {
+    appUrl: string;
+  };
   cors: {
     origin: string | string[];
   };
@@ -28,6 +31,9 @@ const parseCorsOrigin = (origin?: string): string | string[] => {
 export default (): AppConfig => ({
   api: {
     port: Number.parseInt(process.env.API_PORT ?? '3001', 10)
+  },
+  web: {
+    appUrl: process.env.WEB_APP_URL ?? 'http://localhost:3000'
   },
   cors: {
     origin: parseCorsOrigin(process.env.CORS_ORIGIN)
